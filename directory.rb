@@ -5,15 +5,17 @@
 # The input will be given to you as a string? 
 # How will you convert it to a symbol? 
 # What if the user makes a typo?
+require 'date'
 def get_cohort
   valid_cohorts = ["january","february","march","april","may","june","july","august","september","october","november","december"]
   while true  
-    puts "Enter cohort"
+    default_cohort = Date.today.strftime("%B").downcase 
+    puts "Enter cohort (#{default_cohort })"
     cohort = gets.chomp
     
   
     if cohort == ""
-      cohort =  "november"
+      cohort = default_cohort
     end
 
     break if valid_cohorts.include?(cohort)
