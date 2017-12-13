@@ -1,3 +1,27 @@
+#In the input_students method the cohort value is hard-coded. 
+#  How can you ask for both the name and the cohort? 
+# What if one of the values is empty? 
+# Can you supply a default value? 
+# The input will be given to you as a string? 
+# How will you convert it to a symbol? 
+# What if the user makes a typo?
+def get_cohort
+  valid_cohorts = ["january","february","march","april","may","june","july","august","september","october","november","december"]
+  while true  
+    puts "Enter cohort"
+    cohort = gets.chomp
+    
+  
+    if cohort == ""
+      cohort =  "november"
+    end
+
+    break if valid_cohorts.include?(cohort)
+    puts "#{cohort} is not a valid cohort" 
+  end
+
+  return cohort.to_sym
+end
 def start_letter
   puts "Enter start letter"
   gets.chomp
@@ -18,7 +42,7 @@ def input_students2
     break if name == ""
     student_hash = {}
     student_hash [:name]=  name
-    student_hash [:cohort]=  :november
+    student_hash [:cohort] = get_cohort  
  
     attributes.each do |value|
       puts "Enter #{name}'s  #{value}"
