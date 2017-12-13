@@ -41,13 +41,20 @@ def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
-def print(students)
+def xprint(students)
 #  first_letter =  start_letter()
   students.each_with_index do |student,index| 
 #    if first_letter == student[:name][0] || first_letter == ""
     if student[:name].length < 12
-      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)" 
+     puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)" 
     end
+  end
+end
+def print(students)
+  i = 0
+  while i < students.count
+     puts "#{i}. #{students[i][:name]} (#{students[i][:cohort]} cohort)" 
+     i += 1
   end
 end
 def print_footer(students)
