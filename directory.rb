@@ -1,3 +1,7 @@
+def start_letter
+  puts "Enter start letter"
+  gets.chomp
+end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -38,8 +42,11 @@ def print_header
   puts "-------------"
 end
 def print(students)
+  first_letter =  start_letter()
   students.each_with_index do |student,index| 
-    puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)" 
+    if first_letter == student[:name][0] || first_letter == ""
+      puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)" 
+    end
   end
 end
 def print_footer(students)
