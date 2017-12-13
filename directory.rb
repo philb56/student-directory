@@ -2,6 +2,36 @@ def start_letter
   puts "Enter start letter"
   gets.chomp
 end
+def input_students2
+  # create an empty array
+  students = []
+  attributes = ["hobbies","country of birth", "height"]
+  # get the first name
+  name = ""
+  # while the name is not empty, repeat this code
+  while true do
+
+    # get another name from the user
+    puts "Please enter the student's name"
+    puts "To finish, just hit return twice"
+    name = gets.chomp
+    break if name == ""
+    student_hash = {}
+    student_hash [:name]=  name
+    student_hash [:cohort]=  :november
+ 
+    attributes.each do |value|
+      puts "Enter #{name}'s  #{value}"
+      student_hash[value] = gets.chomp 
+    end   
+    # add the student hash to the array
+    students << student_hash
+    puts "Now we have #{students.count} students"
+    puts students
+  end
+  # return the array of students
+  students
+end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -41,12 +71,13 @@ def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
-def xprint(students)
+def print2(students)
 #  first_letter =  start_letter()
+ puts students
   students.each_with_index do |student,index| 
 #    if first_letter == student[:name][0] || first_letter == ""
     if student[:name].length < 12
-     puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)" 
+     puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort) #{student["hobbies"]} #{student["country of birth"]} #{student["height"]}"
     end
   end
 end
@@ -61,7 +92,7 @@ def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
 #nothing happens until we call the methods
-students = input_students
+students = input_students2
 print_header
-print(students)
+print2(students)
 print_footer(students)
