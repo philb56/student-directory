@@ -42,9 +42,10 @@ def print_header
   puts "-------------"
 end
 def print(students)
-  first_letter =  start_letter()
+#  first_letter =  start_letter()
   students.each_with_index do |student,index| 
-    if first_letter == student[:name][0] || first_letter == ""
+#    if first_letter == student[:name][0] || first_letter == ""
+    if student[:name].length < 12
       puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)" 
     end
   end
