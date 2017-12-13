@@ -27,7 +27,6 @@ def input_students2
     # add the student hash to the array
     students << student_hash
     puts "Now we have #{students.count} students"
-    puts students
   end
   # return the array of students
   students
@@ -77,7 +76,7 @@ def print2(students)
   students.each_with_index do |student,index| 
 #    if first_letter == student[:name][0] || first_letter == ""
     if student[:name].length < 12
-     puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort) #{student["hobbies"]} #{student["country of birth"]} #{student["height"]}"
+     puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort) #{student["hobbies"].to_s.center(20)} #{student["country of birth"].to_s.center(20)} #{student["height"].to_s.center(20)}"
     end
   end
 end
