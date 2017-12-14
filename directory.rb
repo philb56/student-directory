@@ -62,7 +62,8 @@ def input_students2
     # get another name from the user
     puts "Please enter the student's name"
     puts "To finish, just hit return twice"
-    name = gets.chomp
+    name = gets
+    name = name.slice(0,name.length-1) # no idea if this was the function intended
     break if name == ""
     student_hash = {}
     student_hash [:name]=  name
