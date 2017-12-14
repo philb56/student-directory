@@ -138,7 +138,8 @@ def print(students)
 end
 ###################################
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  s = students.count != 1 ? "s" : ""
+  puts "Overall, we have #{students.count} great student#{s}" 
 end
 ###################################
 #nothing happens until we call the methods
