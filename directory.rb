@@ -1,14 +1,32 @@
-#In the input_students method the cohort value is hard-coded. 
-#  How can you ask for both the name and the cohort? 
-# What if one of the values is empty? 
-# Can you supply a default value? 
-# The input will be given to you as a string? 
-# How will you convert it to a symbol? 
-# What if the user makes a typo?
+# Once you complete the previous exercise, change the way the users are displayed: print them grouped by cohorts. 
+# To do this, you'll need to get a list of all existing cohorts (the map() method may be useful but it's not the only 
+# option), iterate over it and only print the students from that cohort.
+
 require 'date'
+#let's put all students into an array
+students = [
+  ["Dr. Hannibal Lecter", :november],
+  ["Darth Vader", :november],
+  ["Nurse Ratched", :november],
+  ["Michael Corleone", :november],
+  ["Alex DeLarge", :november],
+  ["The Wicked Witch of the West", :november],
+  ["Terminator", :november],
+  ["Freddy Krueger", :november],
+  ["The Joker", :november],
+  ["Joffrey Baratheon", :november],
+  ["Norman Bates", :november]
+]
+
+###################################
+def get_valid_cohorts
+  ["january","february","march","april","may","june","july","august","september","october","november","december"]
+end
+
+###################################
 def get_cohort
-  valid_cohorts = ["january","february","march","april","may","june","july","august","september","october","november","december"]
   while true  
+    valid_cohorts = get_valid_cohorts
     default_cohort = Date.today.strftime("%B").downcase 
     puts "Enter cohort (#{default_cohort })"
     cohort = gets.chomp
@@ -24,10 +42,14 @@ def get_cohort
 
   return cohort.to_sym
 end
+
+###################################
 def start_letter
   puts "Enter start letter"
   gets.chomp
 end
+
+###################################
 def input_students2
   # create an empty array
   students = []
@@ -57,6 +79,8 @@ def input_students2
   # return the array of students
   students
 end
+
+###################################
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -77,28 +101,26 @@ def input_students
   students
 end
 
-#let's put all students into an array
-students = [
-  ["Dr. Hannibal Lecter", :november],
-  ["Darth Vader", :november],
-  ["Nurse Ratched", :november],
-  ["Michael Corleone", :november],
-  ["Alex DeLarge", :november],
-  ["The Wicked Witch of the West", :november],
-  ["Terminator", :november],
-  ["Freddy Krueger", :november],
-  ["The Joker", :november],
-  ["Joffrey Baratheon", :november],
-  ["Norman Bates", :november]
-]
-
+###################################
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
+
+###################################
+def print3(students)
+  students.map {|student| student[:cohort] }.uniq.each do |cohort|
+    puts "#{cohort} cohort"
+    students.each do |student| 
+      if student[:cohort] == cohort
+        puts "#{student[:name]} #{student["hobbies"].to_s.center(20)} #{student["country of birth"].to_s.center(20)} #{student["height"].to_s.center(20)}"
+      end
+    end
+  end
+end
+###################################
 def print2(students)
 #  first_letter =  start_letter()
- puts students
   students.each_with_index do |student,index| 
 #    if first_letter == student[:name][0] || first_letter == ""
     if student[:name].length < 12
@@ -106,6 +128,7 @@ def print2(students)
     end
   end
 end
+###################################
 def print(students)
   i = 0
   while i < students.count
@@ -113,11 +136,13 @@ def print(students)
      i += 1
   end
 end
+###################################
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
+###################################
 #nothing happens until we call the methods
 students = input_students2
 print_header
-print2(students)
+print3(students)
 print_footer(students)
