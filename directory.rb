@@ -1,18 +1,5 @@
 require 'date'
-#let's put all students into an array
-students = [
-  ["Dr. Hannibal Lecter", :november],
-  ["Darth Vader", :november],
-  ["Nurse Ratched", :november],
-  ["Michael Corleone", :november],
-  ["Alex DeLarge", :november],
-  ["The Wicked Witch of the West", :november],
-  ["Terminator", :november],
-  ["Freddy Krueger", :november],
-  ["The Joker", :november],
-  ["Joffrey Baratheon", :november],
-  ["Norman Bates", :november]
-]
+@students = [] # an empty array accessible to all methods
 
 ###################################
 def get_valid_cohorts
@@ -46,9 +33,8 @@ def start_letter
 end
 
 ###################################
-def input_students2
+def input_students_full
   # create an empty array
-  students = []
   attributes = ["hobbies","country of birth", "height"]
   # get the first name
   name = ""
@@ -70,11 +56,9 @@ def input_students2
       student_hash[value] = gets.chomp 
     end   
     # add the student hash to the array
-    students << student_hash
-    puts "Now we have #{students.count} students"
+    @students << student_hash
+    puts "Now we have #{@students.count} students"
   end
-  # return the array of students
-  students
 end
 
 ###################################
@@ -82,20 +66,17 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # create an empty array
-  students = []
   # get the first name
   name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
-    # puts students[students.count-1]
+    @students << {name: name, cohort: :november}
+    puts "Now we have #{@students.count} students"
+    # puts @students[@students.count-1]
     # get another name from the user
     name = gets.chomp
   end
-  # return the array of students
-  students
 end
 
 ###################################
@@ -105,10 +86,10 @@ def print_header
 end
 
 ###################################
-def print3(students)
-  students.map {|student| student[:cohort] }.uniq.each do |cohort|
+def print_print_students_list_full
+  @students.map {|student| student[:cohort] }.uniq.each do |cohort|
     puts "#{cohort} cohort"
-    students.each do |student| 
+    @students.each do |student| 
       if student[:cohort] == cohort
         puts "#{student[:name]} #{student["hobbies"].to_s.center(20)} #{student["country of birth"].to_s.center(20)} #{student["height"].to_s.center(20)}"
       end
@@ -116,59 +97,52 @@ def print3(students)
   end
 end
 ###################################
-def print2(students)
-#  first_letter =  start_letter()
-  students.each_with_index do |student,index| 
-#    if first_letter == student[:name][0] || first_letter == ""
-    if student[:name].length < 12
-     puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort) #{student["hobbies"].to_s.center(20)} #{student["country of birth"].to_s.center(20)} #{student["height"].to_s.center(20)}"
-    end
-  end
-end
-###################################
-def print(students)
+def print_students_list
   i = 0
-  while i < students.count
-     puts "#{i}. #{students[i][:name]} (#{students[i][:cohort]} cohort)" 
+  while i < @students.count
+     puts "#{i}. #{@students[i][:name]} (#{@students[i][:cohort]} cohort)" 
      i += 1
   end
 end
 ###################################
-def print_footer(students)
-  s = students.count != 1 ? "s" : ""
-  puts "Overall, we have #{students.count} great student#{s}" 
+def print_footer
+  s = @students.count != 1 ? "s" : ""
+  puts "Overall, we have #{@students.count} great student#{s}" 
+end
+##################################
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit" # 9 because we'll be adding more items  
+end
+###################################
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+###################################
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "9"
+      exit
+    else
+      puts "I don't know what you mean, try again"
+  end
 end
 ###################################
 def interactive_menu
-  students = []
   loop do
     # 1. print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit" # 9 because we'll be adding more items
-    # 2. read the input and save it into a variable
-    selection = gets.chomp
-    # 3. do what the user has asked
-    case selection
-    when "1"
-      students = input_students
-    when "2"
-      print_header
-      print3(students)
-      print_footer(students)
-    when "9"
-      exit # this will cause the program to terminate
-    else
-      puts "I don't know what you meant, try again"
-    end
+    print_menu
+    # 2. do what the user has asked
+    process(gets.chomp)
   end
 end 
 ###################################
-#nothing happens until we call the methods
-#students = input_students2
-#print_header
-#print3(students)
-#print_footer(students)
-
 interactive_menu
 
