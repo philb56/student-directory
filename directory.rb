@@ -64,6 +64,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "students.csv successfully saved"
 end
 ###################################
 def load_students(filename = "students.csv")
