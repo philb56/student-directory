@@ -15,7 +15,6 @@ def input_students
     # add the student hash to the array
     add_students(name,:november)
     puts "Now we have #{@students.count} students"
-    # puts @students[@students.count-1]
     # get another name from the user
     name = STDIN.gets.chomp
   end
@@ -87,7 +86,7 @@ def try_load_students
   end
 end
 ###################################
-def process(selection)
+def process_menu_selection(selection)
   case selection
     when "1"
       input_students
@@ -110,7 +109,7 @@ def interactive_menu
     # 1. print the menu and ask the user what to do
     print_menu
     # 2. do what the user has asked
-    process(STDIN.gets.chomp)
+    process_menu_selection(STDIN.gets.chomp)
   end
 end 
 ###################################
