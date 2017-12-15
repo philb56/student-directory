@@ -54,9 +54,15 @@ def show_students
   print_footer
 end
 ###################################
+def get_filename(action)
+  puts "Enter the filename to be " + action  
+  gets.chomp
+end
+###################################
 def save_students
   # open the file for writing
-  file = File.open("students.csv", "w")
+  filename = get_filename("saved") 
+  file = File.open(filename, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -64,23 +70,24 @@ def save_students
     file.puts csv_line
   end
   file.close
-  puts "students.csv successfully saved"
+  puts "#{filename} successfully saved"
 end
 ###################################
-def load_students(filename = "students.csv")
+def load_students(filename = get_filename("loaded") )
+# filename = filename.empty? 
   file = File.open(filename, "r")
   file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
+    name, cohort = line.chomp.split(',')
     add_students(name,cohort)
   end
   file.close
+  puts "Loaded #{@students.count} from #{filename}"
 end
 ###################################
 def try_load_students
   filename = ARGV.first.nil? ? "students.csv" : ARGV.first
   if File.exists?(filename)
      load_students(filename)
-     puts "Loaded #{@students.count} from #{filename}"
   else # if it doesn't exist
     puts "Sorry, #{filename} doesn't exist."
     exit # quit the program
