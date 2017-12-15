@@ -2,72 +2,12 @@ require 'date'
 @students = [] # an empty array accessible to all methods
 
 ###################################
-def get_valid_cohorts
-  ["january","february","march","april","may","june","july","august","september","october","november","december"]
-end
-
-###################################
-def get_cohort
-  while true  
-    valid_cohorts = get_valid_cohorts
-    default_cohort = Date.today.strftime("%B").downcase 
-    puts "Enter cohort (#{default_cohort })"
-    cohort = gets.chomp
-    
-  
-    if cohort == ""
-      cohort = default_cohort
-    end
-
-    break if valid_cohorts.include?(cohort)
-    puts "#{cohort} is not a valid cohort" 
-  end
-
-  return cohort.to_sym
-end
-
-###################################
-def start_letter
-  puts "Enter start letter"
-  gets.chomp
-end
-
-###################################
-def input_students_full
-  # create an empty array
-  attributes = ["hobbies","country of birth", "height"]
-  # get the first name
-  name = ""
-  # while the name is not empty, repeat this code
-  while true do
-
-    # get another name from the user
-    puts "Please enter the student's name"
-    puts "To finish, just hit return twice"
-    name = gets
-    name = name.slice(0,name.length-1) # no idea if this was the function intended
-    break if name == ""
-    student_hash = {}
-    student_hash [:name]=  name
-    student_hash [:cohort] = get_cohort  
- 
-    attributes.each do |value|
-      puts "Enter #{name}'s  #{value}"
-      student_hash[value] = gets.chomp 
-    end   
-    # add the student hash to the array
-    @students << student_hash
-    puts "Now we have #{@students.count} students"
-  end
-end
-
-###################################
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # create an empty array
   # get the first name
-  name = gets.chomp
+  name = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
@@ -75,7 +15,7 @@ def input_students
     puts "Now we have #{@students.count} students"
     # puts @students[@students.count-1]
     # get another name from the user
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
@@ -85,17 +25,6 @@ def print_header
   puts "-------------"
 end
 
-###################################
-def print_print_students_list_full
-  @students.map {|student| student[:cohort] }.uniq.each do |cohort|
-    puts "#{cohort} cohort"
-    @students.each do |student| 
-      if student[:cohort] == cohort
-        puts "#{student[:name]} #{student["hobbies"].to_s.center(20)} #{student["country of birth"].to_s.center(20)} #{student["height"].to_s.center(20)}"
-      end
-    end
-  end
-end
 ###################################
 def print_students_list
   i = 0
@@ -136,13 +65,25 @@ def save_students
   file.close
 end
 ###################################
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
+end
+###################################
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+     puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
 end
 ###################################
 def process(selection)
@@ -163,11 +104,12 @@ def process(selection)
 end
 ###################################
 def interactive_menu
+  try_load_students
   loop do
     # 1. print the menu and ask the user what to do
     print_menu
     # 2. do what the user has asked
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end 
 ###################################
