@@ -74,13 +74,12 @@ def save_students
 end
 ###################################
 def load_students(filename = get_filename("loaded") )
-# filename = filename.empty? 
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
+  
+  File.readlines(filename).each do |line|
     name, cohort = line.chomp.split(',')
     add_students(name,cohort)
   end
-  file.close
+
   puts "Loaded #{@students.count} from #{filename}"
 end
 ###################################
